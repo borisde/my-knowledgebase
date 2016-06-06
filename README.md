@@ -1,1 +1,1 @@
-# 01-my-cheat-sheets
+Various cheat sheets and manuals.

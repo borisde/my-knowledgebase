@@ -1,20 +1,20 @@
-# Мануальчик для себя по установке nginx, PHP 7, MySQL на Ubuntu 14.04
+# Шпаргалка установке nginx, PHP 7, MySQL на Ubuntu 14.04
 
-# Начало
+## Начало
 
-## Приконнектимся к нашему серверу по SSH и обновим список пакетов:
+#### Приконнектимся к нашему серверу по SSH и обновим список пакетов:
 
 ```shell
 sudo apt-get update
 ```
 
-## Установим текстовый редактор Vim, если еще не установлен:
+#### Установим текстовый редактор Vim, если еще не установлен:
 
 ```shell
 sudo apt-get install vim
 ```
 
-## Некоторые полезные команды vim: 
+#### Некоторые полезные команды vim: 
 
 ```vim
 Включить режим добавления после курсора - кнопка a
@@ -25,10 +25,10 @@ sudo apt-get install vim
 Если что-то пошло не так - проверить язык ввода. 
 ```
 
-# Установка nginx.
+## Установка nginx.
 
 
-## Установим последнюю версию nginx:
+#### Установим последнюю версию nginx:
 
 ```shell
 sudo apt-get install python-software-properties
@@ -38,7 +38,7 @@ sudo apt-get install nginx
 ```
 
 
-## Проверим версию nginx:
+#### Проверим версию nginx:
 
 ```shell
 sudo nginx -v
@@ -49,10 +49,10 @@ root@testserver:~# sudo nginx -v
 nginx version: nginx/1.8.1
 ```
 
-# Установка MySQL 5.7.
+## Установка MySQL 5.7.
 
 
-## Для начала скачаем MySQL APT репозиторий и выполним его конфигурацию:
+#### Для начала скачаем MySQL APT репозиторий и выполним его конфигурацию:
 
 ```shell
 wget http://dev.mysql.com/get/mysql-apt-config_0.3.2-1ubuntu14.04_all.deb
@@ -66,7 +66,7 @@ sudo dpkg -i mysql-apt-config_0.3.2-1ubuntu14.04_all.deb
 ![Alt text](images/3.png "Установка MySql 5.7")
 
 
-## Установим MySQL 5.7:
+#### Установим MySQL 5.7:
 
 ```shell
 sudo apt-get update
@@ -74,7 +74,7 @@ sudo apt-get install mysql-server-5.7
 ```
 
 
-## Проверим версию MySQL:
+#### Проверим версию MySQL:
 
 ```shell
 sudo mysql --version
@@ -86,13 +86,13 @@ mysql  Ver 14.14 Distrib 5.7.8-rc, for Linux (x86_64) using  EditLine wrapper
 ```
 
 
-## Изменим дефолтные настройки для повышения безопасности MySQL:
+#### Изменим дефолтные настройки для повышения безопасности MySQL:
 
 ```shell
 sudo mysql_secure_installation
 ```
 
-## Во время выполнения ответим на вопросы:
+#### Во время выполнения ответим на вопросы:
 
 ```
 VALIDATE PASSWORD PLUGIN can be used to test passwords
@@ -117,7 +117,7 @@ Reloade privilege tables now? -- Yes
 ```
 
 
-## Зайдем в консоль MySQL и проверим что всё работает:
+#### Зайдем в консоль MySQL и проверим что всё работает:
 
 ```shell
 mysql -u root -p
@@ -130,17 +130,17 @@ quit
 ![Alt text](images/6.png "Проверка работы MySql 5.7")
 
 
-# Установка PHP 7.
+## Установка PHP 7.
 
 
-## Для начала добавим репозиторий с PHP 7:
+#### Для начала добавим репозиторий с PHP 7:
 
 ```shell
 sudo add-apt-repository ppa:ondrej/php
 sudo apt-get update
 ```
 
-## Установим связку PHP7-FPM для обработки динамических запросов (без apache2):
+#### Установим связку PHP7-FPM для обработки динамических запросов (без apache2):
 
 ```shell
 sudo apt-get install php7.0-fpm 
@@ -149,7 +149,7 @@ sudo apt-get install php7.0-fpm
 > Примечание: если выполнить комманду `sudo apt-get install php7.0`, то по умолчанию будет установлен apache2 c библиотеками для обработки php запросов.
 
 
-## Проверим версию PHP:
+#### Проверим версию PHP:
 
 ```shell
 sudo php --version
@@ -163,14 +163,14 @@ Zend Engine v3.0.0, Copyright (c) 1998-2016 Zend Technologies
 ```
 
 
-## Установим нужные расширения для работы PHP с MySQL:
+#### Установим нужные расширения для работы PHP с MySQL:
 
 ```shell
 sudo apt-get install php7.0-mysql
 ```
 
 
-## Для безопасности нужно изменить строку в php.ini (файлы PHP 7 находятся в папке /etc/php/7.0):
+#### Для безопасности нужно изменить строку в php.ini (файлы PHP 7 находятся в папке /etc/php/7.0):
 
 ```shell
 sudo vim /etc/php/7.0/fpm/php.ini
@@ -181,33 +181,33 @@ sudo vim /etc/php/7.0/fpm/php.ini
 ![Alt text](images/7.png "Настройка PHP 7")
 
 
-## Перезапустим PHP 7:
+#### Перезапустим PHP 7:
 
 ```shell
 sudo service php7.0-fpm restart
 ```
 
 
-## nginx при установке создал сайт с приветствием, изменим дефолтный конфиг этого сайта для работы с PHP 7:
+#### nginx при установке создал сайт с приветствием, изменим дефолтный конфиг этого сайта для работы с PHP 7:
 
 ```shell
 sudo vim /etc/nginx/sites-enabled/default
 ```
 
 
-## Очистим файл:
+#### Очистим файл:
 
 ```vim
 :1,$d <Enter>
 ```
 
-## Включим режим добавления:
+#### Включим режим добавления:
 
 ```vim
 a
 ```
 
-## И добавим туда простой конфиг:
+#### И добавим туда простой конфиг:
 
 ```nginx
 server {
@@ -245,58 +245,58 @@ server {
 }
 ```
 
-## Сохраним файл:
+#### Сохраним файл:
 
 ```vim
 <Esc> :wq <Enter>
 ```
 
-## Перезапустим nginx:	
+#### Перезапустим nginx:	
 
 ```shell
 sudo service nginx restart
 ```
 
-## Файлы сайта с приветствием лежат по адресу `/var/www/html`. Создадим в этой папке `phpinfo.php` для проверки работы PHP 7:
+#### Файлы сайта с приветствием лежат по адресу `/var/www/html`. Создадим в этой папке `phpinfo.php` для проверки работы PHP 7:
 
 ```shell
 sudo vim /var/www/html/phpinfo.php
 ```
 
-## Добавим в файл:
+#### Добавим в файл:
 
 ```php
 <?php
 phpinfo();
 ```
 
-## Введем в браузере <ip_адресс_сервера>/phpinfo.php:
+#### Введем в браузере <ip_адресс_сервера>/phpinfo.php:
 
 ![Alt text](images/9.png "Проверка PHP 7")
 
 
-## Удалим созданный файл phpinfo.php:
+#### Удалим созданный файл phpinfo.php:
 
 ```shell
 sudo rm /var/www/html/phpinfo.php
 ```
 
 
-# Добавление нового сайта.
+## Добавление нового сайта.
 
-## Создадим директорию для нового сайта в папке `/var/www/`:
+#### Создадим директорию для нового сайта в папке `/var/www/`:
 
 ```shell
 sudo mkdir -p /var/www/testsite.com/public_html
 ```
  
-## Создадим новый nginx конфиг:
+#### Создадим новый nginx конфиг:
 
 ```shell
 sudo vim /etc/nginx/sites-available/testsite.com
 ```
 
-## Добавим туда:
+#### Добавим туда:
 
 ```nginx
 server {
@@ -372,33 +372,33 @@ server {
 
 ```
 
-## Сохраним файл:
+#### Сохраним файл:
 
 ```vim
 <Esc> :wq <Enter>
 ```
 
-## Активируем новый хост nginx:
+#### Активируем новый хост nginx:
 
 ```shell
 sudo ln -s /etc/nginx/sites-available/testsite.com /etc/nginx/sites-enabled/testsite.com
 ```
 
-## А также удалим дефолтный хост nginx чтобы не было конфликтов:
+#### А также удалим дефолтный хост nginx чтобы не было конфликтов:
 
 ```shell
 sudo rm /etc/nginx/sites-enabled/default  
 ```
 
-## Перезапустим nginx:	
+#### Перезапустим nginx:	
 
 ```shell
 sudo service nginx restart
 ```
 
-# Добавление пользователей в Ubuntu и MySQL
+## Добавление пользователей в Ubuntu и MySQL
 
-## Добавим нового юзера для Ubuntu:
+#### Добавим нового юзера для Ubuntu:
 
 ```shell
 sudo adduser testuser
@@ -406,7 +406,7 @@ sudo adduser testuser
 
 > Важно: не забыть записать пароль нового юзера!
 
-## Добавим нового юзера в группу sudo:
+#### Добавим нового юзера в группу sudo:
 
 ```shell
 sudo gpasswd -a testuser sudo
@@ -415,13 +415,13 @@ sudo gpasswd -a testuser sudo
 ![Alt text](images/10.png "Добавление юзера Ubuntu 14")
 
 
-## Дадим новому юзеру права на директорию с нашим сайтом, чтобы можно было загружать туда файлы по ftp:
+#### Дадим новому юзеру права на директорию с нашим сайтом, чтобы можно было загружать туда файлы по ftp:
 
 ```shell
 sudo chown -R testuser /var/www/testsite.com/public_html
 ```
 
-## Добавим нового юзера для MySQL:
+#### Добавим нового юзера для MySQL:
 
 ```shell
 mysql -u root -p
@@ -430,7 +430,7 @@ mysql -u root -p
 CREATE USER 'newsqluser'@'localhost' IDENTIFIED BY 'myNewUserPass123';
 ```
 
-## Дадим новому юзеру привилегий:
+#### Дадим новому юзеру привилегий:
 
 ```mysql
 GRANT ALL PRIVILEGES ON * . * TO 'newsqluser'@'localhost';
@@ -442,7 +442,7 @@ FLUSH PRIVILEGES;
 quit
 ```
 
-## Проверим нового юзера:
+#### Проверим нового юзера:
 
 ```shell
 mysql -u newsqluser -p
@@ -454,27 +454,27 @@ show databases;
 quit
 ```
 
-# Запрет root доступа по SSH
+## Запрет root доступа по SSH
 
 > Важно: прежде чем отключить root доступ, нужно создать нового пользователя и записать его пароль.
 
-## Для безопасности отключим SSH доступ для root'a:
+#### Для безопасности отключим SSH доступ для root'a:
 
 ```shell
 sudo vim /etc/ssh/sshd_config
 ```
 
-## Изменим строку 28: `PermitRootLogin no`
+#### Изменим строку 28: `PermitRootLogin no`
 
 ![Alt text](images/11.png "Отключение root логина Ubuntu 14")
 
-## Сохраним файл и сделаем рестарт SSH:
+#### Сохраним файл и сделаем рестарт SSH:
 
 ```shell
 sudo service ssh restart
 ```
 
-## Залогинимся и проверим нового юзера:
+#### Залогинимся и проверим нового юзера:
 
 ```shell
 ssh testuser@<ip_адресс_сервера>
@@ -491,4 +491,4 @@ Are you sure you want to continue connecting (yes/no)? yes
 ![Alt text](images/12.png "Проверка нового юзера Ubuntu 14")
 
 
-## Конец
+#### Конец

@@ -1,4 +1,4 @@
-# Шпаргалка установке nginx, PHP 7, MySQL на Ubuntu 14.04
+# Шпаргалка по установке nginx, PHP 7, MySQL на Ubuntu 14.04
 
 ## Начало
 

@@ -31,6 +31,7 @@ sudo apt-get install vim
 #### Установим последнюю версию nginx:
 
 ```shell
+sudo apt-get install software-properties-common
 sudo apt-get install python-software-properties
 sudo add-apt-repository ppa:nginx/stable
 sudo apt-get update

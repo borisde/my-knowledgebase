@@ -32,9 +32,17 @@ sudo apt-get install vim
 
 ```shell
 sudo apt-get install software-properties-common
+```
+```shell
 sudo apt-get install python-software-properties
+```
+```shell
 sudo add-apt-repository ppa:nginx/stable
+```
+```shell
 sudo apt-get update
+```
+```shell
 sudo apt-get install nginx
 ```
 

@@ -55,7 +55,7 @@ sudo nginx -v
 Для начала скачаем MySQL APT репозиторий и выполним его конфигурацию:
 
 ```
-wget http://dev.mysql.com/get/mysql-apt-config_0.6.0-1_all.deb
+sudo wget http://dev.mysql.com/get/mysql-apt-config_0.6.0-1_all.deb
 ```
 ```
 sudo dpkg -i mysql-apt-config_0.6.0-1_all.deb

@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
 
   # Vagrant box - образ ОС из которой
   # будет создана виртуальная машина.
-  # Список образов на https://atlas.hashicorp.com/search
+  # Список образов на https://app.vagrantup.com/boxes/search
   # Здесь используется Ubuntu Server 14.04 LTS
   config.vm.box = "ubuntu/trusty64"
   

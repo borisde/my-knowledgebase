@@ -1,0 +1,1 @@
+Шпаргалка по установке nginx, PHP 7.3, MySQL, RabbitMQ на Ubuntu 18

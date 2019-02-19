@@ -196,3 +196,126 @@ sudo rm -f /etc/nginx/sites-enabled/default
 ```
 sudo systemctl restart nginx
 ```
+
+
+## Установка MySQL
+
+```
+sudo apt install mysql-server
+```
+
+Проверка версии:
+
+```
+mysql --version
+```
+
+Чтобы повысить безопасность, можно выполнить комманду 
+
+Изменим дефолтные настройки для повышения безопасности MySQL:
+
+```
+sudo mysql_secure_installation
+```
+
+Во время выполнения нужно ответить на вопросы:
+
+```
+Change the root password? -- Изменить пароль для root? (начиная с MySQL 5.7 сначало нужно изменить способ авторизации root пользователя)
+Remove anonymous user? -- Удалить анонимного пользователя?
+Disallow root login remotely? -- Отключить удаленный доступ для root пользователя? 
+Remove test database and access to it? -- Удалить тестовую базу?
+Reloade privilege tables now? -- Перезагрузить таблицы доступа?
+```
+
+
+В версии MySQL 5.7 по умолчанию для root пользователя включена аутентификация с помощью плагина `auth_socket`
+
+![Проверка PHP 7](6.jpg "Проверка PHP 7")
+
+Этот плагин не требует пароль, он только проверяет что пользователь коннектится через UNIX сокет и имя этого пользователя. 
+Это хорошо для безопасности, но если используется phpMyAdmin или другая программа для удаленного доступа необходимо изменить метод аутентификации с `auth_socket` на `mysql_native_password` для `root` пользователя или создать нового пользователя с нужными правами.
+
+##### Изменение метода аутентификации с `auth_socket` на `mysql_native_password` для `root`
+
+```
+sudo mysql
+```
+
+Команда для проверки текущего метода аутентификации:
+
+```
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+```
+
+Команда для изменения метода аутентификации и установка пароля:
+
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'TestPassword';
+```
+
+```
+FLUSH PRIVILEGES;
+```
+
+Зайдем в консоль MySQL по паролю и проверим:
+
+```
+mysql -u root -p
+```
+
+```
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+```
+
+##### Создание нового пользователя MySQL
+
+Заходим в панель MySQL под root'ом. Если включена авторизация по паролю, нужно использовать команду
+`mysql -u root -p`, если по плагину `auth_socket`, то достаточно `sudo mysql`
+
+Создаем нового пользователя:
+
+```sql
+CREATE USER 'test_user'@'localhost' IDENTIFIED BY 'TestPassword';
+```
+
+>`test_user` - логин
+>`localhost` - имя хоста
+>`myNewUserPass123` - пароль
+
+Создадим тестовую базу:
+ 
+```sql
+CREATE DATABASE test;
+```
+
+Дадим новому юзеру привилегии на тестовую базу:
+
+```sql
+GRANT ALL PRIVILEGES ON test.* TO 'test_user'@'localhost';
+```
+
+> `GRANT ALL PRIVILEGES ON *.*` - эта команда дает **все** права на **<имя_базы> . <имя_таблицы>**  
+
+```sql
+FLUSH PRIVILEGES;
+```
+
+Выходим из панели MySql:
+
+```sql
+quit
+```
+
+Проверим нового юзера:
+
+```
+mysql -u test_user -p
+```
+
+```sql
+show databases;
+```
+
+
+

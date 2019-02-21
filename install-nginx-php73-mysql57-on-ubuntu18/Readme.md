@@ -1,4 +1,4 @@
-# Шпаргалка по установке nginx, PHP 7.3, MySQL, RabbitMQ на Ubuntu 18
+# Шпаргалка по установке nginx, PHP 7.3, MySQL 5.7 на Ubuntu 18
 
 ## Обновление пакетов
 

@@ -331,35 +331,3 @@ show databases;
 Результат:
 
 ![Проверка работы MySQL](screenshots/8.jpg "Проверка работы MySQL")
-
-
-# Установка phpMyAdmin
-
-https://linuxize.com/post/how-to-install-phpmyadmin-with-nginx-on-ubuntu-18-04/
-https://www.digitalocean.com/community/questions/phpmyadmin-or-alternative-for-php7-nginx-mysql-5-7-ubuntu-16-04
-
-```
-sudo apt update
-```
-
-```
-sudo apt install phpmyadmin
-```
-
-Установщик попросит выбрать веб сервер, который у нас установлен. Поскольку в списке нет `nginx` нажимаем `TAB` для перехода на `Ok` и затем `Enter`.
-
-![Установка phpMyAdmin на Nginx](screenshots/9.jpg "Установка phpMyAdmin на Nginx")
-
-Далее установщик спросит хотим ли мы использовать `dbconfig-common` для настройки базы.
-Выбираем `Yes` и задаем пароль:
-
-![Установка phpMyAdmin на Nginx](screenshots/10.jpg "Установка phpMyAdmin на Nginx")
-![Установка phpMyAdmin на Nginx](screenshots/11.jpg "Установка phpMyAdmin на Nginx")
-
-
-#### Конфигурация phpMyAdmin на Nginx
-
-
-
-
-

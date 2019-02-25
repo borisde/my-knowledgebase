@@ -335,4 +335,170 @@ show databases;
 
 Результат:
 
-![Проверка работы MySQL](screenshots/proverka-mysql.jpg.jpg "Проверка работы MySQL")
+![Проверка работы MySQL](screenshots/proverka-mysql.jpg "Проверка работы MySQL")
+
+#### Создание нового хоста nginx и пример скрипта работы из PHP с MySQL
+
+
+Перейдем в `/var/www/` и создадим там новую директорию:
+
+```
+cd /var/www/
+```
+
+```
+sudo mkdir test_site
+```
+
+Создаем nginx конфиг для нового сайта:
+
+```
+sudo vim /etc/nginx/sites-available/testsite.conf
+```
+
+И добавляем туда базовый конфиг:
+
+```nginxconf
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    #корневая директория где хранятся файлы сайта
+    root /var/www/test_site; 
+
+    index index.php;
+    
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;                
+    }
+
+    location ~ \.php$ {			    
+        fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$; 
+        include fastcgi_params;
+                
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+    }
+}
+```
+
+![Создание нового хоста nginx](screenshots/sozdanie-hosta-nginx.jpg "Создание нового хоста nginx")
+
+Сохраним файл:
+
+```vim
+<Esc> :wq <Enter>
+```
+
+Активируем новый хост nginx:
+
+```
+sudo ln -s /etc/nginx/sites-available/testsite.conf /etc/nginx/sites-enabled/
+```
+
+Перезагрузим nginx:
+
+```
+sudo systemctl restart nginx
+```
+
+Для примера напишем простой скрипт на PHP который при заходе на страницу будет записывать в базу время, ip адрес и другую информацию о визите и сразу же выводить последние 5 записей из таблицы.
+
+Зайдем в консоль MySQL под нашим тестовым юзером и создадим структуру таблицы:
+
+```
+mysql -u test_user -p
+```  
+
+Выберем тестовую базу:
+
+```sql
+USE test;
+```
+
+Создаем таблицу `visitors` со следующей структурой:
+
+```sql
+CREATE TABLE `visitors` (
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `ip_address` varbinary(16) NOT NULL DEFAULT '',
+  `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+```
+
+Теперь создадим PHP скрипт на нашем тестовом хосте, который будет получать данные о визите и записывать их в таблицу:
+
+```
+sudo vim /var/www/test_site/index.php
+```
+
+Добавим туда такой код:
+
+```php
+
+<?php
+// Получаем ip адрес из суперглобальной переменной $_SERVER
+// cначало проверяем REMOTE_ADDR, если он пустой - HTTP_X_FORWARDED_FOR и HTTP_CLIENT_IP
+$ip = $_SERVER['REMOTE_ADDR'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['HTTP_CLIENT_IP'];
+
+// Конвертируем IPv4 или IPv6 адресс в бинарную структуру для сохранения в поле ip_address таблицы
+$ip = inet_pton($ip);
+if (!$ip) {
+    $ip = '';
+}
+
+// Присваеваем user_agent из суперглобальной переменной $_SERVER. Если переменная не содержит данных - присваеваем пустое значение
+$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+
+//Создаем соединение с базой
+$user = 'test_user';
+$pass = 'TestPassword';
+$pdo  = new PDO('mysql:host=localhost;dbname=test', $user, $pass);
+
+// Создаем запрос на добавление данных
+$q = "INSERT INTO visitors (ip_address, user_agent) VALUES (?,?)";
+$stmt = $pdo->prepare($q);
+$stmt->execute([$ip, $user_agent]);
+
+// Выбираем 5 последних визитов
+$q = $pdo->query("SELECT * FROM visitors ORDER BY id DESC LIMIT 5");
+
+// закрываем соединение с базой
+$stmt = null;
+$pdo = null;
+
+$i = 1;
+?>
+<table border="2" cellpadding="8" cellspacing="0">
+    <tbody>
+    <tr>
+        <td></td>
+        <td>Ip address</td>
+        <td>User agent</td>
+        <td>Visit date</td>
+    </tr>
+<?php while ($row = $q->fetch()) : ?>
+    <tr>
+        <td><?=$i++?></td>
+        <td><?=inet_ntop($row['ip_address'])?></td>
+        <td><?=$row['user_agent']?></td>
+        <td><?=date('d.m.Y H:i:s', strtotime($row['created_at']))?></td>
+    </tr>
+
+<?php endwhile;
+
+```
+
+Сохраняем файл и смотрим результат:
+
+![Пример скрипта PHP7 и MySQL](screenshots/primer-php7-mysql.jpg "Пример скрипта PHP7 и MySQL")
+
+
+
+
+

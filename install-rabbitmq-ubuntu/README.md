@@ -1,9 +1,9 @@
 
-# Установка RabbitMQ на Ubuntu 18 bionic
+# Установка RabbitMQ на Ubuntu 18 (Bionic)
 
 `rabbitmq-server` включен в стандартный репозиторий Ubuntu, но эта версия будет устаревшей.
 Для установки последней доступной версии будем использовать репозиторий [Bintray](https://bintray.com/).
-Этот репозиторий поддерживается командой RabbitMQ и в него включены последние версии для разных версий ОС, например `Ubuntu 18.04 (Bionic)`, `Ubuntu 16.04 (Xenial)`, `Debian Stretch`, `Debian Jessie`.
+Этот репозиторий поддерживается командой RabbitMQ и в него включены последние версии для разных версий ОС, например `Ubuntu 18.04 (Bionic)`, `Ubuntu 16.04 (Xenial)`, `Debian Stretch`, `Debian Jessie` и др.
 
 Для работы RabbitMQ также потребуется установить последнюю верию `Erlang`.
 
@@ -20,7 +20,7 @@ wget -O - "https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbit
 ```
 
 
-![Импорт ключей RabbitMQ](screenshots/12.jpg "Импорт ключей RabbitMQ")
+![Импорт ключей RabbitMQ](screenshots/import-rabbitmq-keys.jpg "Импорт ключей RabbitMQ")
 
 
 Теперь нужно добавить файл с описанием нового репозитория в `/etc/apt/sources.list.d/`. В этот файл добавим строки с адресами для `Erlang` и `RabbitMQ` следуя такому шаблону:
@@ -70,19 +70,22 @@ EOF
 sudo vim /etc/apt/sources.list.d/bintray.list
 ```
 
-![Добавление репозитория Bintray](screenshots/14.jpg "Добавление репозитория Bintray")
+![Добавление репозитория Bintray](screenshots/dobavlenie-bintray.jpg "Добавление репозитория Bintray")
 
 
 Может случиться такое что `Erlang` будет доступен из нескольких репозиториев, поэтому настроим приоритет для `Bintray` и последней актуальной версиии.
 Сделать это можно создав файл с конфигурацией в директории `/etc/apt/preferences.d/`:
 
 ```
-sudo tee /etc/apt/preferences.d/erlang-bintray <<EOF
-# /etc/apt/preferences.d/erlang-bintray
-Package: erlang*
-Pin: release o=Bintray
+sudo vim /etc/apt/preferences.d/erlang-bintray
+```
+
+И добавим в начало такой конфиг:  
+
+```
+Package: erlang* 
+Pin: release o=Bintray 
 Pin-Priority: 1000
-EOF
 ```
 
 Проверяем:
@@ -91,9 +94,9 @@ EOF
 sudo apt-cache policy
 ```
 
-![Настройка пиннинга репозитория](screenshots/15.jpg "Настройка пиннинга репозитория")
+![Настройка пиннинга репозитория](screenshots/pinning-bintray.jpg "Настройка пиннинга репозитория")
 
-![Настройка пиннинга репозитория](screenshots/16.jpg "Настройка пиннинга репозитория")
+![Настройка пиннинга репозитория](screenshots/pinning-bintray2.jpg "Настройка пиннинга репозитория")
  
 Теперь необходимо обновить пакеты:
 
@@ -117,7 +120,7 @@ sudo apt-get install rabbitmq-server
 systemctl status rabbitmq-server
 ```
 
-![Установка RabbitMQ](screenshots/17.jpg "Установка RabbitMQ")
+![Установка RabbitMQ](screenshots/ustanovka-rabbitmq.jpg "Установка RabbitMQ")
 
 
 ##### Создание нового пользователя RabbitMQ
@@ -151,7 +154,7 @@ sudo rabbitmqctl delete_user guest
 sudo rabbitmqctl list_users
 ```
 
-![Создание нового пользователя RabbitMQ](screenshots/18.jpg "Создание нового пользователя RabbitMQ")
+![Создание нового пользователя RabbitMQ](screenshots/rabbitmq-novyi-user.jpg "Создание нового пользователя RabbitMQ")
 
 ##### Установка панели администрирования для RabbitMQ
 
@@ -163,9 +166,9 @@ sudo rabbitmq-plugins enable rabbitmq_management
 
 Панель будет доступна по адресу `<адрес_сервера>:15672`
 
-![Установка панели администрирования для RabbitMQ](screenshots/19.jpg "Установка панели администрирования для RabbitMQ")
+![Установка панели администрирования для RabbitMQ](screenshots/admin-panel-rabbitmq.jpg "Установка панели администрирования для RabbitMQ")
 
-![Установка панели администрирования для RabbitMQ](screenshots/20.jpg "Установка панели администрирования для RabbitMQ")
+![Установка панели администрирования для RabbitMQ](screenshots/admin-panel-rabbitmq2.jpg "Установка панели администрирования для RabbitMQ")
 
 
 ##### Полезные команды

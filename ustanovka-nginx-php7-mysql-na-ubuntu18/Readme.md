@@ -1,4 +1,4 @@
-# Шпаргалка по установке Nginx, PHP 7, MySQL на Ubuntu 18 (bionic)
+# Шпаргалка по установке Nginx, PHP 7, MySQL на Ubuntu 18 (Bionic)
 
 ## Обновление пакетов
 

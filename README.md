@@ -1,4 +1,4 @@
-# Мои мануалы и щпаргалки
+# Мои мануалы и шпаргалки
 
 [Установка nginx, PHP 7, MySQL на Ubuntu 18 (Bionic)](ustanovka-nginx-php7-mysql-na-ubuntu18/README.md)
 

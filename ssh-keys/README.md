@@ -3,23 +3,67 @@
 ### Создание SSH ключей под Ubuntu.
 
 1. Заходим в ssh директорию  
-    ```cd ~/.ssh/```
+
+    ```
+    cd ~/.ssh/
+   ```
+   
 2. Генерируем ключ:  
-    ```ssh-keygen -t rsa -b 4096 -C "<boris@ubuntu> Test key for Github"```
+
+    ```
+    ssh-keygen -t rsa -b 4096 -C "<boris@ubuntu> Test key for Github"
+   ```    
+   
 3. Указываем любое имя файла (по умолчанию id_rsa):  
-    ```github_rsa```
+
+    ```
+    github_rsa
+   ```
+   
 4. Можно защитить паролем сразу или позже командой ```ssh-keygen -p```
+    
+   ![Генерация ssh ключей Ubuntu](screenshots/generaciya-ssh-ubuntu.png "Генерация ssh ключей Ubuntu")  
+
 5. Запускаем ssh-agent командой  
-   ```eval "$(ssh-agent -s)"```
+
+   ```
+   eval "$(ssh-agent -s)"
+   ```
+   
 6. Добавляем **приватный ключ** в ssh агент  
-   ```ssh-add ~/.ssh/github_rsa```
-7. Проверяем командой ```ssh-add -l```    
-8. Идем на ```Github.com > settings > keys```, нажимаем кнопку ```New SSH Key```
-9. Выводим наш **публичный ключ** командой:  
-   ```cat github_rsa.pub```  
-   копируем его (без пробелов в конце!) и добавляем на Github.
+
+   ```
+   ssh-add ~/.ssh/github_rsa
+   ```
+   
+7. Проверяем командой  
+
+   ```
+   ssh-add -l
+   ```    
+   
+   ![Добавление ssh ключей Ubuntu](screenshots/ssh-add.png "Добавление ssh ключей Ubuntu")
+
+8. Выводим наш **публичный ключ** командой: 
+ 
+   ```
+   cat github_rsa.pub
+   ```  
+   
+   копируем его (без пробелов в конце!)
+   
+   ![Копирование ssh ключей Ubuntu](screenshots/copy-ssh-public-key.png "Копирование ssh ключей Ubuntu")  
+
+9. Идем на ```Github.com > settings > keys```, нажимаем кнопку ```New SSH Key``` и добавляем наш ключ:
+    
+    ![Добавление ssh ключей на Github](screenshots/add-ssh-github.png "Добавление ssh ключей на Github")   
+    
+    ![Добавление ssh ключей на Github](screenshots/ssh-keys-github.png "Добавление ssh ключей на Github")  
+   
 10. Проверяем ssh подключение  
-   ```ssh -T git@github.com```  
+   ```
+   ssh -T git@github.com
+   ```  
    
     Результат:
       ```bash
@@ -32,6 +76,7 @@
       Hi borisde! You've successfully authenticated, but GitHub does not provide shell access.
       boris@ubuntu19:~/.ssh$
       ```   
+
 
 
 > Если ключи создавались без использования команды ```sudo```, то и выполнять команды ```git``` нужно без ```sudo```. Например, если ввести ```sudo git clone```, то будут использованы ключи отличные от ранее созданных, получим ```Permission denied```

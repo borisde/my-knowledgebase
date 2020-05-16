@@ -62,19 +62,20 @@
    ```
    ssh -T git@github.com
    ```  
-   
-    Результат:
-      ```bash
-      boris@ubuntu19:~/.ssh$ ssh -T git@github.com
-      The authenticity of host 'github.com (140.82.118.3)' can't be established.
-      RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
-      Are you sure you want to continue connecting (yes/no)? нуы
-      Please type 'yes' or 'no': yes
-      Warning: Permanently added 'github.com,140.82.118.3' (RSA) to the list of known hosts.
-      Hi borisde! You've successfully authenticated, but GitHub does not provide shell access.
-      boris@ubuntu19:~/.ssh$
-      ```   
+     
+   Результат:  
+        
+   ```
+   boris@ubuntu19:~/.ssh$ ssh -T git@github.com
+   The authenticity of host 'github.com (140.82.118.3)' can't be established.
+   RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+   Are you sure you want to continue connecting (yes/no)? нуы
+   Please type 'yes' or 'no': yes
+   Warning: Permanently added 'github.com,140.82.118.3' (RSA) to the list of known hosts.
+   Hi borisde! You've successfully authenticated, but GitHub does not provide shell access.
+   boris@ubuntu19:~/.ssh$
+   ```   
 
-
+  
 
 > Если ключи создавались без использования команды ```sudo```, то и выполнять команды ```git``` нужно без ```sudo```. Например, если ввести ```sudo git clone```, то будут использованы ключи отличные от ранее созданных, получим ```Permission denied```  

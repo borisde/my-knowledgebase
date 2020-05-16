@@ -4,6 +4,8 @@
 
 [Установка RabbitMQ на Ubuntu 18 (Bionic)](install-rabbitmq-ubuntu/README.md)
 
+[Создание SSH ключей в Ubuntu. Добавление на Github](ssh-keys/README.md)
+
 [Установка nginx, PHP 7, MySQL на Ubuntu 14.04](lemp-install-manual-ru/README.md)
 
 [Установка Vagrant на Windows 10](ustanovka-vagrant-na-windows-10/README.md)

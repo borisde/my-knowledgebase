@@ -134,18 +134,18 @@ __также жирный текст__
 
 ### Обычная ссылка
 ```markdown
-[Мой блог](http://refs.su)
+[Мой блог](http://test.test)
 ```
 
-[Мой блог](http://refs.su)
+[Мой блог](http://test.test)
 
 ### Ссылка с title
 
 ```markdown
-[Мой блог](http://refs.su "Ссылка на блог http://refs.su")
+[Мой блог](http://test.test "Ссылка на блог http://test.test")
 ```
 
-[Мой блог](http://refs.su "Ссылка на блог http://refs.su")
+[Мой блог](http://test.test "Ссылка на блог http://test.test")
 
 ###  Ссылки в виде сносок
 
@@ -155,7 +155,7 @@ __также жирный текст__
 
 потом добавить в любом месте:
 ```markdown
-[blog]:http://refs.su
+[blog]:http://test.test
 ```
 
 ## Изображения
